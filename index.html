@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOUNDaiTION × Poppy & August — AI Sourcing Proposal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; overflow: hidden; height: 100vh; }
+  
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  .slide.active { opacity: 1; pointer-events: all; }
+  
+  /* Navigation */
+  .nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 100; }
+  .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.25); cursor: pointer; transition: all 0.3s; }
+  .nav-dot.active { background: #7FA68C; transform: scale(1.3); }
+  .nav-arrows { position: fixed; bottom: 28px; right: 40px; display: flex; gap: 12px; z-index: 100; }
+  .nav-arrows button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; cursor: pointer; transition: all 0.2s; }
+  .nav-arrows button:hover { background: rgba(255,255,255,0.2); }
+  .slide-counter { position: fixed; bottom: 36px; left: 40px; color: rgba(255,255,255,0.4); font-size: 14px; z-index: 100; }
+
+  /* Slide styles */
+  h1 { font-size: 3.2em; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+  h2 { font-size: 2.2em; font-weight: 700; line-height: 1.2; margin-bottom: 24px; }
+  h3 { font-size: 1.4em; font-weight: 600; margin-bottom: 16px; }
+  p, li { font-size: 1.15em; line-height: 1.6; color: rgba(255,255,255,0.85); }
+  .subtitle { font-size: 1.3em; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 32px; }
+  .accent { color: #7FA68C; }
+  .accent-blue { color: #6BADB8; }
+  .accent-coral { color: #E86C5A; }
+  
+  .content-left { text-align: left; align-items: flex-start; max-width: 900px; }
+  .content-center { text-align: center; max-width: 1000px; }
+  
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; width: 100%; max-width: 900px; }
+  .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; text-align: left; }
+  .card h3 { font-size: 1.1em; margin-bottom: 8px; }
+  .card p { font-size: 0.95em; color: rgba(255,255,255,0.65); }
+  .card .emoji { font-size: 2em; margin-bottom: 12px; }
+  
+  .phase-row { display: flex; gap: 20px; margin-top: 24px; width: 100%; max-width: 1000px; }
+  .phase-card { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px; text-align: left; }
+  .phase-card .phase-num { font-size: 0.85em; font-weight: 700; color: #7FA68C; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .phase-card h3 { font-size: 1.15em; margin-bottom: 8px; }
+  .phase-card p { font-size: 0.9em; }
+  .phase-card .price { font-size: 1.3em; font-weight: 700; color: #6BADB8; margin-top: 12px; }
+  
+  .stat-row { display: flex; gap: 40px; margin-top: 32px; }
+  .stat { text-align: center; }
+  .stat .number { font-size: 3em; font-weight: 800; color: #7FA68C; }
+  .stat .label { font-size: 0.9em; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  
+  .timeline { width: 100%; max-width: 800px; margin-top: 32px; }
+  .timeline-row { display: flex; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .timeline-row:last-child { border-bottom: none; }
+  .timeline-phase { width: 120px; font-weight: 700; color: #7FA68C; font-size: 0.9em; }
+  .timeline-what { flex: 1; font-size: 1em; }
+  .timeline-time { width: 120px; text-align: right; color: rgba(255,255,255,0.5); font-size: 0.9em; }
+  .timeline-cost { width: 140px; text-align: right; font-weight: 600; color: #6BADB8; }
+  
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 8px 0; padding-left: 24px; position: relative; }
+  ul li::before { content: '→'; position: absolute; left: 0; color: #7FA68C; }
+  
+  .big-quote { font-size: 1.8em; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.7); max-width: 800px; line-height: 1.5; }
+  .big-quote .highlight { color: #7FA68C; font-weight: 500; font-style: normal; }
+  
+  .logo-text { font-size: 1.1em; font-weight: 700; letter-spacing: 1px; }
+  .logo-text .ai { color: #7FA68C; font-size: 0.85em; }
+  
+  .cta-box { background: linear-gradient(135deg, rgba(127,166,140,0.15), rgba(107,173,184,0.15)); border: 1px solid rgba(127,166,140,0.3); border-radius: 20px; padding: 48px; text-align: center; margin-top: 24px; max-width: 700px; }
+  
+  @media (max-width: 768px) {
+    .slide { padding: 30px 24px; }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    .card-grid { grid-template-columns: 1fr; }
+    .phase-row { flex-direction: column; }
+    .stat-row { flex-wrap: wrap; gap: 20px; }
+    .stat .number { font-size: 2em; }
+    .timeline-row { flex-wrap: wrap; gap: 4px; }
+    .timeline-phase, .timeline-time, .timeline-cost { width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide active content-center" style="background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);">
+    <div class="logo-text">FOUND<span class="ai">ai</span>TION CONSULTING</div>
+    <div style="height: 40px;"></div>
+    <h1>Smarter Sourcing for<br><span class="accent">Poppy & August</span></h1>
+    <p class="subtitle">AI-powered procurement that saves time, reduces waste, and finds the best prices — automatically.</p>
+    <div style="height: 20px;"></div>
+    <p style="color: rgba(255,255,255,0.35); font-size: 0.9em;">Prepared March 2026 · Confidential</p>
+  </div>
+
+  <!-- SLIDE 2: About Poppy & August -->
+  <div class="slide content-center" style="background: linear-gradient(180deg, #0f0f0f, #1a1215);">
+    <p style="color: rgba(255,255,255,0.4); font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">The Client</p>
+    <h1>🌸 Poppy & August</h1>
+    <p class="subtitle">Bespoke, garden-inspired florals · Bozeman, Montana</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="emoji">💐</div>
+        <h3>Daily Arrangements</h3>
+        <p>Custom bouquets, same-day delivery, walk-in orders for the Bozeman community.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">💒</div>
+        <h3>Full-Service Weddings</h3>
+        <p>Packages starting at $5,500. Consultations, mood boards, installations, setup & breakdown.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🎨</div>
+        <h3>Creative Vision</h3>
+        <p>"Daydreamers, romantics, creatives" — each design crafted with intention and love.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">📦</div>
+        <h3>Two Wholesalers</h3>
+        <p>Sourcing from <strong>Washington Floral</strong> (regional, Komet K2K) and <strong>iBuyFlowers</strong> (farm-to-florist, 9,000+ varieties).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: The Problem -->
+  <div class="slide content-left" style="background: linear-gradient(135deg, #1a0a0a, #0f0f0f);">
+    <p style="color: #E86C5A; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">The Problem</p>
+    <h2>Sourcing flowers is <span class="accent-coral">manual, time-consuming, and costly.</span></h2>
+    <ul style="margin-top: 16px;">
+      <li><strong>Two separate portals</strong> — logging in, comparing prices and availability by hand</li>
+      <li><strong>Holiday guesswork</strong> — Valentine's, Mother's Day volume based on gut feeling and last year's memory</li>
+      <li><strong>Over-ordering = waste</strong> — flowers don't wait. Perishable inventory is unforgiving.</li>
+      <li><strong>Under-ordering = scrambling</strong> — emergency orders at premium prices, disappointed customers</li>
+      <li><strong>Wedding planning friction</strong> — manually calculating stems per arrangement × number of tables × buffer</li>
+      <li><strong>Hours lost weekly</strong> — time spent on procurement that could be spent designing and selling</li>
+    </ul>
+    <div style="margin-top: 32px;">
+      <p class="big-quote">"I spend more time <span class="highlight">shopping for flowers</span> than I do <span class="highlight">arranging them.</span>"</p>
+      <p style="color: rgba(255,255,255,0.35); margin-top: 8px; font-size: 0.9em;">— Every florist, eventually</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: The Solution Overview -->
+  <div class="slide content-center" style="background: linear-gradient(135deg, #0a1a12, #0f0f0f);">
+    <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">The Solution</p>
+    <h2>AI-Powered Sourcing &<br>Demand Forecasting</h2>
+    <p class="subtitle">Three phases. Each one delivers standalone value.</p>
+    <div class="phase-row">
+      <div class="phase-card">
+        <div class="phase-num">Phase 1</div>
+        <h3>🔍 Smart Dashboard</h3>
+        <p>Unified price & availability view across both wholesalers. Side-by-side comparisons. Price drop alerts.</p>
+        <div class="price">$2,500–$4,000</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 2</div>
+        <h3>📊 Demand Forecasting</h3>
+        <p>AI predicts what you'll need based on history, holidays, wedding bookings, and seasonal trends.</p>
+        <div class="price">$3,000–$5,000</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">Phase 3</div>
+        <h3>🚀 Auto-Order</h3>
+        <p>Weekly suggested orders. One-click approve. Auto-routes to the best-priced wholesaler per stem.</p>
+        <div class="price">$1,500–$2,500</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Phase 1 Deep Dive -->
+  <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #0f1a1a);">
+    <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 1 · 2-3 Weeks</p>
+    <h2>Smart Price & Availability Dashboard</h2>
+    <div class="card-grid" style="margin-top: 24px;">
+      <div class="card">
+        <h3>🔗 Wholesaler Integration</h3>
+        <p>Connects to Washington Floral (via Komet K2K API) and iBuyFlowers (web automation). Pulls real-time data on a schedule.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Side-by-Side View</h3>
+        <p>"Red roses — Washington: $0.85/stem, 500 avail. iBuy: $0.72/stem, 800 avail, ships Thursday."</p>
+      </div>
+      <div class="card">
+        <h3>🔔 Smart Alerts</h3>
+        <p>Get notified when prices drop on your most-ordered stems, or when popular varieties are running low.</p>
+      </div>
+      <div class="card">
+        <h3>⚡ One-Click Order</h3>
+        <p>Jump directly to the order page on whichever wholesaler has the best deal. No more portal-hopping.</p>
+      </div>
+    </div>
+    <p style="margin-top: 24px; color: rgba(255,255,255,0.5);"><strong>Technical note:</strong> Washington Floral uses Komet Sales K2K — Komet has an API. iBuyFlowers requires browser automation or data feed partnership.</p>
+  </div>
+
+  <!-- SLIDE 6: Phase 2 Deep Dive -->
+  <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #1a0f1a);">
+    <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 2 · 3-4 Weeks</p>
+    <h2>AI Demand Forecasting Engine</h2>
+    <ul style="margin-top: 16px; margin-bottom: 24px;">
+      <li>Ingests <strong>past order history</strong> — even spreadsheets, receipts, or POS exports</li>
+      <li>Layers <strong>holiday calendars</strong> — Valentine's, Mother's Day, Easter, prom season, Thanksgiving, Christmas</li>
+      <li>Pulls in <strong>wedding bookings</strong> — 3 weddings June 14-15? Auto-calculates stem needs per package</li>
+      <li>Factors in <strong>weather data</strong> — heat shortens vase life, rain affects local supply</li>
+      <li>Learns <strong>your patterns</strong> — the more you use it, the smarter it gets</li>
+    </ul>
+    <div style="background: rgba(127,166,140,0.1); border: 1px solid rgba(127,166,140,0.2); border-radius: 12px; padding: 24px; max-width: 800px;">
+      <p style="font-size: 0.9em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">EXAMPLE AI RECOMMENDATION</p>
+      <p style="font-size: 1.1em; color: rgba(255,255,255,0.9);">"You have <strong>2 weddings June 14-15</strong> + normal Saturday traffic. Recommend ordering <strong>400 roses, 200 peonies, 150 eucalyptus</strong> by June 9. Best price: <span class="accent">iBuy for roses ($0.68/stem)</span>, <span class="accent-blue">Washington for peonies ($1.20/stem, local = fresher)</span>."</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Phase 3 Deep Dive -->
+  <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #0f0f1a);">
+    <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 3 · 1-2 Weeks</p>
+    <h2>Automated Order Suggestions</h2>
+    <ul style="margin-top: 16px; margin-bottom: 32px;">
+      <li><strong>Weekly "suggested order" notification</strong> — email or SMS, your choice</li>
+      <li>Factors in upcoming events, seasonal trends, current inventory, weather</li>
+      <li><strong>One-click approve</strong> — or adjust quantities, then auto-submits to the right wholesaler</li>
+      <li>Splits orders intelligently — roses from iBuy (cheaper), greens from Washington (fresher, local)</li>
+      <li>Holiday mode: ramps up automatically 2-3 weeks before peak dates</li>
+    </ul>
+    <div style="background: rgba(107,173,184,0.1); border: 1px solid rgba(107,173,184,0.2); border-radius: 12px; padding: 24px; max-width: 700px;">
+      <p style="font-size: 1.1em; text-align: center;">📱 <strong>Monday morning notification:</strong></p>
+      <p style="font-size: 1em; text-align: center; color: rgba(255,255,255,0.7); margin-top: 8px;">"This week's order is ready. 3 wedding orders + Valentine's ramp-up. Total: $2,340 across 2 suppliers. <span class="accent" style="cursor: pointer;">✅ Approve</span> · <span class="accent-blue" style="cursor: pointer;">✏️ Edit</span>"</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: ROI -->
+  <div class="slide content-center" style="background: linear-gradient(135deg, #0f1a0f, #0f0f0f);">
+    <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Return on Investment</p>
+    <h2>This pays for itself in <span class="accent">2-4 months.</span></h2>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="number">$2K</div>
+        <div class="label">Monthly savings<br>from waste reduction</div>
+      </div>
+      <div class="stat">
+        <div class="number">15%</div>
+        <div class="label">Better pricing<br>via smart sourcing</div>
+      </div>
+      <div class="stat">
+        <div class="number">5hrs</div>
+        <div class="label">Saved per week<br>on procurement</div>
+      </div>
+      <div class="stat">
+        <div class="number">$0</div>
+        <div class="label">Valentine's Day<br>panic orders</div>
+      </div>
+    </div>
+    <div style="margin-top: 40px; max-width: 700px;">
+      <p style="color: rgba(255,255,255,0.6);">For a shop doing $15-20K/month in wholesale, even a <strong>10% reduction in waste</strong> saves $1,500-2,000/month. Add better pricing from always ordering from the cheapest source per stem, and you're looking at <strong>$24K-$30K in annual savings</strong> — from a one-time investment of $7-11K.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Timeline & Investment -->
+  <div class="slide content-center" style="background: #0f0f0f;">
+    <p style="color: #6BADB8; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Timeline & Investment</p>
+    <h2>6-9 weeks from kickoff to fully operational.</h2>
+    <div class="timeline">
+      <div class="timeline-row" style="color: rgba(255,255,255,0.4); font-size: 0.85em; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.15);">
+        <div class="timeline-phase">PHASE</div>
+        <div class="timeline-what">DELIVERABLE</div>
+        <div class="timeline-time">TIMELINE</div>
+        <div class="timeline-cost" style="color: rgba(255,255,255,0.4);">INVESTMENT</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-phase">Phase 1</div>
+        <div class="timeline-what">Smart Price & Availability Dashboard</div>
+        <div class="timeline-time">2-3 weeks</div>
+        <div class="timeline-cost">$2,500–$4,000</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-phase">Phase 2</div>
+        <div class="timeline-what">AI Demand Forecasting Engine</div>
+        <div class="timeline-time">3-4 weeks</div>
+        <div class="timeline-cost">$3,000–$5,000</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-phase">Phase 3</div>
+        <div class="timeline-what">Automated Order Suggestions</div>
+        <div class="timeline-time">1-2 weeks</div>
+        <div class="timeline-cost">$1,500–$2,500</div>
+      </div>
+      <div class="timeline-row" style="border-top: 2px solid rgba(127,166,140,0.3);">
+        <div class="timeline-phase" style="color: #fff; font-weight: 800;">TOTAL</div>
+        <div class="timeline-what" style="color: #fff; font-weight: 600;">Complete AI sourcing system</div>
+        <div class="timeline-time">6-9 weeks</div>
+        <div class="timeline-cost" style="font-size: 1.1em;">$7,000–$11,500</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-phase" style="color: rgba(255,255,255,0.4);">Ongoing</div>
+        <div class="timeline-what" style="color: rgba(255,255,255,0.5);">Support, model tuning, updates</div>
+        <div class="timeline-time" style="color: rgba(255,255,255,0.35);">Monthly</div>
+        <div class="timeline-cost" style="color: rgba(107,173,184,0.7);">$500–$750/mo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CTA -->
+  <div class="slide content-center" style="background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #0a1a12 100%);">
+    <div class="logo-text" style="margin-bottom: 32px;">FOUND<span class="ai">ai</span>TION CONSULTING</div>
+    <h1 style="font-size: 2.8em;">You built it.<br><span class="accent">We make it smarter.</span></h1>
+    <div class="cta-box">
+      <h3 style="margin-bottom: 12px;">Ready to get started?</h3>
+      <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">Phase 1 can be up and running in 2-3 weeks. Let's talk about what Poppy & August needs first.</p>
+      <p style="font-size: 1.2em; font-weight: 600;">Mike Molnar & Pete Levitan</p>
+      <p style="color: rgba(255,255,255,0.5); margin-top: 4px;">FOUNDaiTION Consulting</p>
+      <p style="color: #7FA68C; margin-top: 8px;">Let's build something beautiful. 🌸</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="slide-counter" id="counter">1 / 10</div>
+<div class="nav" id="nav"></div>
+<div class="nav-arrows">
+  <button onclick="prev()">←</button>
+  <button onclick="next()">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const nav = document.getElementById('nav');
+const counter = document.getElementById('counter');
+let current = 0;
+
+// Build nav dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  nav.appendChild(dot);
+});
+
+function goTo(i) {
+  slides[current].classList.remove('active');
+  nav.children[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  nav.children[current].classList.add('active');
+  counter.textContent = (current + 1) + ' / ' + slides.length;
+}
+
+function next() { if (current < slides.length - 1) goTo(current + 1); }
+function prev() { if (current > 0) goTo(current - 1); }
+
+// Keyboard + swipe
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+});
+</script>
+
+</body>
+</html>

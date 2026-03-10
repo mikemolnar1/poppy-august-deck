@@ -178,41 +178,53 @@
   <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #0f1a1a);">
     <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 1 · 2-3 Weeks</p>
     <h2>Smart Price & Availability Dashboard</h2>
-    <div class="card-grid" style="margin-top: 24px;">
+    <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">One screen. Both wholesalers. Real-time pricing, availability, and delivery windows — no more logging into two portals.</p>
+    <div class="card-grid" style="margin-top: 12px;">
       <div class="card">
         <h3>🔗 Wholesaler Integration</h3>
-        <p>Connects to Washington Floral (via Komet K2K API) and iBuyFlowers (web automation). Pulls real-time data on a schedule.</p>
+        <p>Connects to Washington Floral via their <strong>Komet K2K API</strong> (real-time farm inventory) and iBuyFlowers via <strong>automated data sync</strong>. Refreshes pricing and availability multiple times daily.</p>
       </div>
       <div class="card">
-        <h3>📊 Side-by-Side View</h3>
-        <p>"Red roses — Washington: $0.85/stem, 500 avail. iBuy: $0.72/stem, 800 avail, ships Thursday."</p>
+        <h3>📊 Side-by-Side Comparison</h3>
+        <p>Search any stem and instantly see: price per stem, quantity available, shipping timeline, and freshness rating from both suppliers. <em>"Red roses — Washington: $0.85/stem, 500 avail. iBuy: $0.72/stem, ships Thursday."</em></p>
       </div>
       <div class="card">
-        <h3>🔔 Smart Alerts</h3>
-        <p>Get notified when prices drop on your most-ordered stems, or when popular varieties are running low.</p>
+        <h3>🔔 Price & Availability Alerts</h3>
+        <p>Set watches on your go-to stems. Get notified when prices drop below your threshold, when popular varieties are running low before a holiday, or when new seasonal stock arrives.</p>
       </div>
       <div class="card">
-        <h3>⚡ One-Click Order</h3>
-        <p>Jump directly to the order page on whichever wholesaler has the best deal. No more portal-hopping.</p>
+        <h3>⚡ One-Click Ordering</h3>
+        <p>Jump directly to the checkout on whichever wholesaler wins on price or freshness. Order history tracked in your dashboard for forecasting in Phase 2.</p>
       </div>
     </div>
-    <p style="margin-top: 24px; color: rgba(255,255,255,0.5);"><strong>Technical note:</strong> Washington Floral uses Komet Sales K2K — Komet has an API. iBuyFlowers requires browser automation or data feed partnership.</p>
   </div>
 
   <!-- SLIDE 6: Phase 2 Deep Dive -->
   <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #1a0f1a);">
     <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 2 · 3-4 Weeks</p>
     <h2>AI Demand Forecasting Engine</h2>
-    <ul style="margin-top: 16px; margin-bottom: 24px;">
-      <li>Ingests <strong>past order history</strong> — even spreadsheets, receipts, or POS exports</li>
-      <li>Layers <strong>holiday calendars</strong> — Valentine's, Mother's Day, Easter, prom season, Thanksgiving, Christmas</li>
-      <li>Pulls in <strong>wedding bookings</strong> — 3 weddings June 14-15? Auto-calculates stem needs per package</li>
-      <li>Factors in <strong>weather data</strong> — heat shortens vase life, rain affects local supply</li>
-      <li>Learns <strong>your patterns</strong> — the more you use it, the smarter it gets</li>
-    </ul>
-    <div style="background: rgba(127,166,140,0.1); border: 1px solid rgba(127,166,140,0.2); border-radius: 12px; padding: 24px; max-width: 800px;">
-      <p style="font-size: 0.9em; color: rgba(255,255,255,0.5); margin-bottom: 8px;">EXAMPLE AI RECOMMENDATION</p>
-      <p style="font-size: 1.1em; color: rgba(255,255,255,0.9);">"You have <strong>2 weddings June 14-15</strong> + normal Saturday traffic. Recommend ordering <strong>400 roses, 200 peonies, 150 eucalyptus</strong> by June 9. Best price: <span class="accent">iBuy for roses ($0.68/stem)</span>, <span class="accent-blue">Washington for peonies ($1.20/stem, local = fresher)</span>."</p>
+    <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">An AI model trained on your business — your history, your calendar, your wedding pipeline — that tells you exactly what to order and when.</p>
+    <div class="card-grid" style="margin-top: 12px;">
+      <div class="card">
+        <h3>📋 Historical Intelligence</h3>
+        <p>Ingests your <strong>past order data</strong> — POS exports, spreadsheets, even receipts. Builds a baseline of what you use, when, and how much. Identifies patterns you might not see yourself.</p>
+      </div>
+      <div class="card">
+        <h3>📅 Holiday & Event Calendar</h3>
+        <p>Pre-loaded with floral industry peak dates: <strong>Valentine's, Mother's Day, Easter, prom season, Thanksgiving, Christmas.</strong> Automatically ramps forecasts 2-3 weeks ahead of each peak.</p>
+      </div>
+      <div class="card">
+        <h3>💒 Wedding Pipeline Sync</h3>
+        <p>Connects to your booking calendar. 3 weddings June 14-15? The AI auto-calculates stem needs per package type (bridal bouquet = X stems, centerpiece = Y stems × Z tables) plus buffer.</p>
+      </div>
+      <div class="card">
+        <h3>🌡️ External Factors</h3>
+        <p><strong>Weather data</strong> (heat = shorter vase life = order closer to event), <strong>local events</strong>, and <strong>seasonal availability shifts</strong> from farms — all factored into every recommendation.</p>
+      </div>
+    </div>
+    <div style="background: rgba(127,166,140,0.1); border: 1px solid rgba(127,166,140,0.2); border-radius: 12px; padding: 20px; max-width: 900px; margin-top: 20px;">
+      <p style="font-size: 0.85em; color: rgba(255,255,255,0.5); margin-bottom: 6px;">EXAMPLE AI RECOMMENDATION</p>
+      <p style="font-size: 1.05em; color: rgba(255,255,255,0.9);">"You have <strong>2 weddings June 14-15</strong> + normal Saturday traffic. Recommend ordering <strong>400 roses, 200 peonies, 150 eucalyptus</strong> by June 9. Best price: <span class="accent">iBuy for roses ($0.68/stem)</span>, <span class="accent-blue">Washington for peonies ($1.20/stem, local = fresher)</span>."</p>
     </div>
   </div>
 
@@ -220,16 +232,27 @@
   <div class="slide content-left" style="background: linear-gradient(135deg, #0f0f0f, #0f0f1a);">
     <p style="color: #7FA68C; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Phase 3 · 1-2 Weeks</p>
     <h2>Automated Order Suggestions</h2>
-    <ul style="margin-top: 16px; margin-bottom: 32px;">
-      <li><strong>Weekly "suggested order" notification</strong> — email or SMS, your choice</li>
-      <li>Factors in upcoming events, seasonal trends, current inventory, weather</li>
-      <li><strong>One-click approve</strong> — or adjust quantities, then auto-submits to the right wholesaler</li>
-      <li>Splits orders intelligently — roses from iBuy (cheaper), greens from Washington (fresher, local)</li>
-      <li>Holiday mode: ramps up automatically 2-3 weeks before peak dates</li>
-    </ul>
-    <div style="background: rgba(107,173,184,0.1); border: 1px solid rgba(107,173,184,0.2); border-radius: 12px; padding: 24px; max-width: 700px;">
-      <p style="font-size: 1.1em; text-align: center;">📱 <strong>Monday morning notification:</strong></p>
-      <p style="font-size: 1em; text-align: center; color: rgba(255,255,255,0.7); margin-top: 8px;">"This week's order is ready. 3 wedding orders + Valentine's ramp-up. Total: $2,340 across 2 suppliers. <span class="accent" style="cursor: pointer;">✅ Approve</span> · <span class="accent-blue" style="cursor: pointer;">✏️ Edit</span>"</p>
+    <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">The system does the thinking. You just approve. Every Monday: a ready-to-go order, optimized across both suppliers.</p>
+    <div class="card-grid" style="margin-top: 12px;">
+      <div class="card">
+        <h3>📱 Weekly Smart Orders</h3>
+        <p>Every Monday morning: a complete suggested order based on your upcoming week — events, weddings, walk-in forecast, seasonal trends. Delivered via email or SMS.</p>
+      </div>
+      <div class="card">
+        <h3>🧠 Intelligent Splitting</h3>
+        <p>Automatically routes each stem to the best supplier. <strong>Roses from iBuy</strong> (cheaper). <strong>Greens from Washington</strong> (fresher, local). You get the best of both without comparing manually.</p>
+      </div>
+      <div class="card">
+        <h3>✅ One-Click Approve</h3>
+        <p>Review the suggested order, adjust quantities if you want, hit approve — and it submits to both wholesalers automatically. Or override anything with a tap.</p>
+      </div>
+      <div class="card">
+        <h3>🎄 Holiday Auto-Ramp</h3>
+        <p>The system knows Valentine's is coming before you start stressing about it. <strong>Automatically increases order volumes 2-3 weeks out</strong> based on last year's data + this year's bookings.</p>
+      </div>
+    </div>
+    <div style="background: rgba(107,173,184,0.1); border: 1px solid rgba(107,173,184,0.2); border-radius: 12px; padding: 20px; max-width: 900px; margin-top: 20px;">
+      <p style="font-size: 1.05em; text-align: center;">📱 <strong>Monday 8:00 AM:</strong> "This week's order is ready. 3 wedding orders + Valentine's ramp-up. Total: $2,340 across 2 suppliers. <span class="accent" style="cursor: pointer;">✅ Approve</span> · <span class="accent-blue" style="cursor: pointer;">✏️ Edit</span>"</p>
     </div>
   </div>
 
